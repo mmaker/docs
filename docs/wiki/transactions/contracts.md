@@ -24,16 +24,16 @@ All outputs include a Pedersen commitment of the form `r*G + v*H` with `r`
 the blinding factor, `v` the value, and G and H two distinct generator points
 on the same curve group.
 
-### Aggregate Signatures (a.k.a. Schnorr, MuSig)
+### Signatures
 
 We suppose we have the SHA256 hash function and the same G curve as above. In
 its simplest form, an aggregate signature is built from:
 
 * the message `M` to sign, in our case the transaction fee
 * a private key `x`, with its matching public key `x*G`
-* a nonce `k` just used for the purpose of building the signature
 
-We build the challenge `e = SHA256(M | k*G | x*G)`, and the scalar
+In the case of Schnorr signatures, which are also the basis for MuSig, we additionally have 
+a nonce `k`. We build the challenge `e = SHA256(M | k*G | x*G)`, and the scalar
 `s = k + e * x`. The full aggregate signature is then the pair `(s, k*G)`.
 
 The signature can be checked using the public key `x*G`, re-calculating `e`
